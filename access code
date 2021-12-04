@@ -1,0 +1,65 @@
+# 256 encryption
+QA URL:  https://qasmartpay.ccavenue.com/transaction.do?command=initiateTransaction
+QA Details
+MID: 2954
+Access Code: AVXO28HB43BJ65OXJB
+Enc key: 427190368772896C1506024785088D20
+
+
+
+AVSS03HD24CL18SSLC
+3EE30464D1C76A9A61C370E64976836F
+
+
+
+Merchant id - 2
+URL : https://test.ccavenue.com
+Access code : AVGQ03HF27AH21QGHA
+Working Key : EA4E1E2F7F00A80EE154BBF76CC14064
+
+
+
+
+
+Abhishek Infibeam Avenues:
+$merchant_id = 2957;
+$access_code = 'AVJU27FA10BT53UJTB';
+$working_key = 'B8D3BFE69371644294E7234DD811B544';
+URL: https://qasecure.ccavenue.com
+
+
+
+AVHV03HD24CL19VHLC
+FBC78E0DCF0820678DC0D5A1B64B0266
+
+
+
+255526
+AVQV03HD24CL21VQLC
+1468D131FC3F86675D0935D32225ADEA
+
+
+Prakash
+255526
+AVQJ91HD84CL76JQLC
+B2E79089E9A9FCBE8AB283A78D1A9124
+
+2
+AVJA90HB80CH38AJHC
+0EDD6313FC1A9F0BDB2CB4F06F23A63A
+
+[1:24 PM, 7/2/2020] Soniya Rai Avenues: access_code: 	AVJA90HB80CH38AJHC
+[1:24 PM, 7/2/2020] Soniya Rai Avenues: Working key: 	0EDD6313FC1A9F0BDB2CB4F06F23A63A
+[1:24 PM, 7/2/2020] Soniya Rai Avenues: MID :2
+
+URL:http://59.95.21.133
+access_code: 	AVGQ03HF27AH21QGHA
+Working key: 	EA4E1E2F7F00A80EE154BBF76CC14064
+
+
+
+
+
+
+
+merchant_id=2&order_id=2&currency=INR&amount=1.00&redirect_url=http%3A%2F%2F127.0.0.1%3A3002%2FccavResponseHandler&cancel_url=http%3A%2F%2F127.0.0.1%3A3002%2FccavResponseHandler&language=EN&billing_name=Peter&billing_address=Santacruz&billing_city=Mumbai&billing_state=MH&billing_zip=400054&billing_country=India&billing_tel=9876543210&billing_email=testing%40domain.com&delivery_name=Sam&delivery_address=Vile+Parle&delivery_city=Mumbai&delivery_state=Maharashtra&delivery_zip=400038&delivery_country=India&delivery_tel=0123456789&merchant_param1=additional+Info.&merchant_param2=additional+Info.&merchant_param3=additional+Info.&merchant_param4=additional+Info.&merchant_param5=additional+Info.&integration_type=iframe_popup&promo_code=&customer_identifier=

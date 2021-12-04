@@ -1,0 +1,11 @@
+django
+django_filters
+djangorestframework
+markdown
+django-filter
+whitenoise
+python-decouple
+dj-database-url
+dj_database_url
+gunicorn
+psycopg2

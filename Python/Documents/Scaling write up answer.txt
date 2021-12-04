@@ -1,0 +1,74 @@
+When planning for scalability, it is important to define what we are talking about, what are the requirements and constraints: are you planning to get 15 million users or 5-15 millions simultaneously active users? 15 million users is relatively easy (any database is able to handle millions or even billions of records), the second one is very difficult and that’s where you’ll need to spend a lot of time making sure you can serve that many users simultaneously. But for that you’ll need to plan both on the software side and on the hardware side.
+
+But before going all in you should get a thousand users first. Validate your business model. Iterate the product rapidly. Finalise your features and fix your bugs. Only then can you start really thinking about how to scale it.
+
+The following planning considerations are critical.
+
+1. Scalable architecture for storage should be planned for, because ideally, there should be no limit. There must be quick retrieval of read, and the more read queried at a single time, the more scalability there must be.
+
+2. Dividing the Functions: Service-Oriented Architecture (SOA) is the solution. Each service (write and read) can have its own functional context. And anything beyond that context will occur through the API of another service.
+
+3. De-coupling the write and read functions will allow problems to be isolated and addressed with greater ease. Each function can be scaled independently – again easier to do, and bugs with one function will not impact the other. The two functions will not be competing with one another as use grows. When they are connected, a large number of writes, for example, will pull resources from read, and retrieval will be slowed.
+
+
+4. As we get bigger we’ll hit issues in the data tier. You will potentially start to run into issues with your database around contention with the write master, which basically means you can only send so much write traffic to one server. How do we solve it? 
+
+We will have to move into functionality of other types of DBs like NoSQL, graph, etc. As we don't have data that requires complex joins, like say a temporary data, hot tables, metadata/lookup tables, then consider moving it to a NoSQL database.
+
+-Federation: splitting into multiple DBs based on function. For example, create a Forums Database, a User Database, a Products Database. You might have had these in a single database before, now spread them out. The different databases can be scaled independently of each other. The downsides: you can’t do cross database queries; it delays getting to the next strategy, which is sharding.
+
+-Shards: As use continues to grow, it is also possible to add shards to prevent bottlenecks. Users are thus distributed across shards based upon some predetermined identifying factor. While this reduces the number of users impacted by disruptions (each shard functions separately), there is then the additional need for a search service for each shard so that metadata is collated.
+
+5. Gunicorn can be used as their WSGI server. Apache harder to configure and more CPU intensive.
+
+6. Fabric can be used to execute commands in parallel on all machines. A deploy takes only seconds.
+
+7. Redundancy is not optional. Any web architecture must have it. so that the loss of anything stored on one server is not “fatal.” Particularly from a services standpoint, if a core functionality piece fails, there is another copy simultaneously running. Key elements of redundancy:
+
+-Failover
+-Shared-nothing architecture
+-No single failure point
+
+8. For partitions we can look for horizontal scaling, then you will need to include it in your initial design with a distributed system architecture. It will really be a chore to do modify for this scaling after the fact. The most common horizontal scaling is the breaking up of services into partitions (shards). They can then be distributed into separate functionalities, by criteria (Asian customer vs. American customers, e.g.). the benefit, of course, is that partitions provide stores of added capacity. 
+There are some challenges with partitioning because anytime you distribute data or functions among multiple servers, not the least of which is data locality. If data is not local when needed, servers will have to go and fetch.  
+A second challenge is an inconsistency. If different services are writing and reading from a shared source, there can be an incident in which someone is sending a request for something at the same time it is being updated by someone else.
+
+Vmtouch (portable file system cache diagnostics) can be used to manage what data is in memory, especially when failing over from one machine to another, where there is no active memory profile already.
+
+
+9. Caches, the principle is simple: data that has been requested recently is more likely to be requested again.
+
+-On the request node
+You can insert on the request node. If the data is stored there, the user retrieval is almost immediate. If it’s not there, then the node will query the disk.
+As you scale and add more nodes, each node can hold its own cache. The only problem with this architecture is that if your load balancer randomly sends requests to different nodes, there is a much greater potential for misses.
+
+-Global Cache
+While this requires adding a server when all nodes access the same cache, the chance for misses is far less. The downside is that the single cache can get overloaded as numbers of users increase. Again, a decision must really be made based upon individual circumstances. There are two architectural designs for a global cache. In one, the cache queries the database if the requested data is not held; in the other, each node moves on from the cache to the database.
+
+-Distributed Cache
+This architecture provides for the distribution of pieces of data throughout all of the nodes. The nodes then check with one another before fetching from the database. This can be a good structure for scaling, because as new nodes are added the, too, will be caching data. The more data that is cached closer to the user, the faster it is retrieved.
+
+Redis can be used here. Redis as a cache, you gain a lot of power (such as the ability to fine-tune cache contents and durability) and greater efficiency overall.
+
+10. A proxy can collapse all same requests and forward only one request to the database disk, reading the data only one time. While latency time for an individual requester may increase a bit, this is offset by the ability to improve high load incidents.
+
+Proxies and caches can also be used together, so long as the cache is placed before the proxy, because it is working from memory and can take the load from the proxy as user volume grows.
+
+11. Adding indexes to the original website architecture will give the benefit of faster reads as data and servers increase. When there are data sets of huge TB size, but a requester wants just a tiny piece, finding that tin piece is tough, especially when that data is spread out among physical devices. Indexes will solve some of this problem.
+
+This is an evolving architecture, as ways are sought to compress indexes, which can become quite cumbersome as the data becomes larger.
+
+12. Load balancers, The concept is to distribute the load as the numbers of simultaneous connections increase and to route connections to request nodes. Thus a site can increase services just by adding nodes, and the load balancer will respond according to the criteria that have been set up.
+
+One challenge with load balancers is that the same requester may be routed differently during ensuing visits. This is generally a problem seen by e-commerce sites that want the shopping cart to remain through all visits. Thus, there is the ability to build in stickiness so that the same requester is always routed the same, but then node failures can be a problem. Browser caches and cookies can offset this.
+
+ELB cab be used to load balance across instances. The ELB API makes it easy to move instances in and out of production.
+
+13. When building new sites, as for a startup, write management is pretty easy. Systems are quite simple, and writes are fast. As a site grows, however, writes can take longer and longer due to factors already discussed. To plan for this, scalable web application developers will need the architecture in place to build in asynchrony, and queues are a solid solution. This allows a client to make a request, receive acknowledgment of that request, and then move on to other work, periodically checking back. Under synchronous systems, the client simply waits, doing no other work. This is an issue during heavy loads. The other benefit of queues is that they can be built to retry requests is one has failed for any reason. This is just better quality service.
+
+We have Amazon Simple Queue Service (SQS) or RabbitMQ for this service.
+
+
+There is no right universal solution – each situation is unique. It will be necessary to determine future needs (e.g., concurrency levels, heavier reads or writes, or both, sorts, ranges, etc.) as well as to have a plan in place when a failure occurs.
+
+Scalable web application architecture must be custom architecture based upon individual circumstances.

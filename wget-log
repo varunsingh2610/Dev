@@ -1,0 +1,6 @@
+--2020-01-04 21:46:24--  https://r2---sn-cvh7kney.googlevideo.com/videoplayback?expire=1578158420
+Resolving r2---sn-cvh7kney.googlevideo.com (r2---sn-cvh7kney.googlevideo.com)... 2404:6800:4009:b::7, 173.194.52.7
+Connecting to r2---sn-cvh7kney.googlevideo.com (r2---sn-cvh7kney.googlevideo.com)|2404:6800:4009:b::7|:443... connected.
+HTTP request sent, awaiting response... 403 Forbidden
+2020-01-04 21:46:25 ERROR 403: Forbidden.
+

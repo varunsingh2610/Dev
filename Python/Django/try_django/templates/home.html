@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{{ title }}
+
+{{ user }}
+
+{{ request.user }}
+
+{{ request.path }}
+
+{{ user.is_authenticated }}
+{% if user.is_authenticated %}
+
+<h1>User data</h1>
+
+{% endif %}
+
+{% endblock %}

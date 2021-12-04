@@ -1,0 +1,29 @@
+{
+  "IMDB":
+    {
+      "Database": {
+        "DB_RDMS": "mysql",
+        "DB_API": "pymysql",
+        "DB_HOST": "localhost",
+        "DB_USER": "sandip",
+        "DB_PASS": "sandip08",
+        "DB_PORT": "3306",
+        "DB_NAME": "imdb"
+      },
+      "SMTP": {
+        "SMTP_EMAIL": "",
+        "SMTP_USER": "",
+        "SMTP_PASS": "",
+        "SMTP_SERVER": "outlook-emeawest.office365.com",
+        "SMTP_PORT": "587"
+      },
+      "Logger": {
+        "LOG_LEVEL": "INFO",
+        "LOG_INFO_FORMAT": "[%(asctime)s] [%(process)d] [%(levelname)s] %(message)s",
+        "LOG_DEBUG_FORMAT": "[%(asctime)s] [%(process)d] [%(levelname)s] %(message)s [in %(pathname)s:%(lineno)d]",
+        "LOG_TIMESTAMP": "%Y-%m-%d %H:%M:%S %z",
+        "LOG_FILE_MODE": "a",
+        "LOG_FILE_PATH": "log/app.log"
+      }
+    }
+}
