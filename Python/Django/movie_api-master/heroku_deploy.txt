@@ -1,0 +1,23 @@
+# Install heroku on your local system
+sudo snap install heroku --classic
+
+# Login to heroku
+heroku login
+Enter your Heroku credentials.
+Email: user@example.com
+Password:
+
+# Clone the git repo
+git clone https://github.com/sandipdrwde/movie_api.git
+cd movie_api
+
+# Create heroku app
+heroku create movie-imdb-api
+
+# Push code to heroku
+git push heroku master
+
+# Run app on atleast one instance 
+heroku ps:scale web=1
+heroku open
+heroku logs
